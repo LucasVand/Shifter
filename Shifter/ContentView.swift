@@ -39,6 +39,7 @@ struct ContentView: View {
     
     @State var gameOver: Bool = false
     
+    @State var thing: Int = 0
     
     let device = Device.current
     
