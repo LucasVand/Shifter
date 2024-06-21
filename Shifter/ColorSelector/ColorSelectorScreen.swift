@@ -44,7 +44,7 @@ struct ColorSelectorScreen: View {
                                     ColorSelectorButton(colorTitles: $colorTitles, mode: $mode, colorSelected: $colorSelected, colorView: $colorView, hapticsBool: $hapticsBool, levelCompleted: $levelCompleted, num: Binding.constant(num))
                                     
                                     if ((what*numStars) - stars()) > 0 {
-                                        Text("★" + String((num*numStars)-stars()) + " Needed To Unlock")
+                                        Text("★" + String((num*numStars)-stars()) + " More Needed To Unlock")
                                             .foregroundColor(colorData.secondary[num])
                                             .font(.system(size: 13, weight: .bold, design: .serif))
                                     }

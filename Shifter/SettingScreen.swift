@@ -21,6 +21,8 @@ struct SettingScreen: View {
     
     @State var scaling: [Bool] = [false,false,false,false,false ]
     @State var isPressed: [Bool] = [false,false]
+    
+    @State var deleteDataConfirm: Bool = false
     let colorData = ColorData()
     
     var body: some View {
@@ -80,50 +82,59 @@ struct SettingScreen: View {
                 Spacer()
                 
                 Button {
-                    simpleWarning()
-                    unlockAll = false
-                    levelComplete = Array(repeating: Array(repeating: Array(repeating: Array(repeating: false, count: 4), count: 5), count: 6), count: 2)
-                    achevementString = Array(repeating: false, count: 15)
-                    
-                    firstPlay = true
+                    deleteDataConfirm = true
                 } label: {
                     Rectangle()
                         .frame(width: 300, height: 70)
                         .cornerRadius(20)
                         .foregroundColor(colorData.primary[colorSelected])
                 }.buttonStyle(ExitButtonSytle(colorSelected: $colorSelected))
+                    .confirmationDialog("Sure You Want To Delete Data", isPresented: $deleteDataConfirm, titleVisibility: .visible) {
+                        Button("Delete", role: .destructive) {
+                            simpleWarning()
+                            unlockAll = false
+                            levelComplete = Array(repeating: Array(repeating: Array(repeating: Array(repeating: false, count: 4), count: 5), count: 6), count: 2)
+                            achevementString = Array(repeating: false, count: 15)
+                            
+                            firstPlay = true
+                        }
+                        Button("Cancel", role: .cancel) {
+                            deleteDataConfirm = false
+                        }
+                        
+                    }
                     .overlay {
                         Text("Clear Data")
-                            .foregroundColor(colorData.secondary[colorSelected])
+                            .foregroundColor(.red)
                     }
                     .padding(5)
                     .scaleEffect(scaling[2] ? 1 : 0)
                 
-                Rectangle()
-                    .frame(width: 300, height: 70)
-                    .cornerRadius(20)
-                    .foregroundColor(colorData.primary[colorSelected])
-                    .modifier(ShadowSettings(ispressed: $diagnostics, colorSelected: $colorSelected))
-                    .overlay {
-                        HStack {
-                            Spacer()
-                            Text("Diagnostics")
-                                .foregroundColor(colorData.secondary[colorSelected])
-                            
-                            Spacer()
-                            Image(systemName: diagnostics ? "circle.fill" : "circle")
-                                .foregroundColor(colorData.secondary[colorSelected])
-                                .padding(.horizontal,20)
-
-                        }
-                    }
-                    .padding(5)
-                    .onTapGesture {
-                            simpleWarning()
-                            diagnostics.toggle()
-                        
-                    }
-                    .scaleEffect(scaling[3] ? 1 : 0)
+//                Rectangle()
+//                    .frame(width: 300, height: 70)
+//                    .cornerRadius(20)
+//                    .foregroundColor(colorData.primary[colorSelected])
+//                    .modifier(ShadowSettings(ispressed: $diagnostics, colorSelected: $colorSelected))
+//                    .overlay {
+//                        HStack {
+//                            Spacer()
+//                            Text("Diagnostics")
+//                                .foregroundColor(colorData.secondary[colorSelected])
+//                            
+//                            Spacer()
+//                            Image(systemName: diagnostics ? "circle.fill" : "circle")
+//                                .foregroundColor(colorData.secondary[colorSelected])
+//                                .padding(.horizontal,20)
+//
+//                        }
+//                    }
+//                    .padding(5)
+//                    .onTapGesture {
+//                            simpleWarning()
+//                            diagnostics.toggle()
+//                        
+//                    }
+//                    .scaleEffect(scaling[3] ? 1 : 0)
                 
                 Rectangle()
                     .frame(width: 300, height: 70)
